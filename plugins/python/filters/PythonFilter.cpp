@@ -55,6 +55,7 @@ std::string PythonFilter::getName() const { return s_info.name; }
 
 void PythonFilter::addArgs(ProgramArgs& args)
 {
+std::cerr << "Filter add args!\n";
     args.add("source", "Python script to run", m_source);
     args.add("script", "File containing script to run", m_scriptFile);
     args.add("module", "Python module containing the function to run",
@@ -67,6 +68,7 @@ void PythonFilter::addArgs(ProgramArgs& args)
 
 void PythonFilter::addDimensions(PointLayoutPtr layout)
 {
+std::cerr << "Filter addDim!\n";
     for (const std::string& s : m_addDimensions)
         layout->registerOrAssignDim(s, pdal::Dimension::Type::Double);
 }
@@ -74,9 +76,14 @@ void PythonFilter::addDimensions(PointLayoutPtr layout)
 
 void PythonFilter::ready(PointTableRef table)
 {
+std::cerr << "Filter ready!\n";
     if (m_source.empty())
         m_source = FileUtils::readFileIntoString(m_scriptFile);
+std::cerr << "Pre-cast!\n";
+    dynamic_cast<plang::Environment*>(plang::Environment::get())->set_stdout(log()->getLogStream());
+std::cerr << "Done dyn cast!\n";
     static_cast<plang::Environment*>(plang::Environment::get())->set_stdout(log()->getLogStream());
+std::cerr << "Done cast!\n";
     m_script = new plang::Script(m_source, m_module, m_function);
     m_pythonMethod = new plang::Invocation(*m_script);
     m_pythonMethod->compile();
@@ -86,6 +93,7 @@ void PythonFilter::ready(PointTableRef table)
 
 PointViewSet PythonFilter::run(PointViewPtr view)
 {
+std::cerr << "Filter run!\n";
     log()->get(LogLevel::Debug5) << "filters.python " << *m_script <<
         " processing " << view->size() << " points." << std::endl;
     m_pythonMethod->resetArguments();
@@ -97,7 +105,9 @@ PointViewSet PythonFilter::run(PointViewPtr view)
         args << m_pdalargs;
         m_pythonMethod->setKWargs(args.str());
     }
+std::cerr << "About to execute!\n";
     m_pythonMethod->execute();
+std::cerr << "Done running!\n";
 
     PointViewSet viewSet;
 

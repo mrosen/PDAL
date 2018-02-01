@@ -393,6 +393,7 @@ bool PluginManager<T>::loadByPath(const std::string& pluginPath)
                 m_log->get(LogLevel::Error) <<
                     "Failed to initialize plugin function for plugin '" <<
                     completePath << "'." << std::endl;
+    std::cerr << "Loaded plugin " << completePath << "!\n";
         }
         else
             m_log->get(LogLevel::Error) << "Plugin '" << completePath <<

@@ -63,7 +63,13 @@
 __attribute__ ((constructor))
 static void loadPython()
 {
+    std::cerr << "Trying to open " << PDAL_PYTHON_LIBRARY << "!\n";
     ::dlopen(PDAL_PYTHON_LIBRARY, RTLD_LAZY | RTLD_GLOBAL);
+    char *err = ::dlerror();
+    if (err)
+        std::cerr << "DLerror = " << err << "!\n";
+    else
+        std::cerr << "No error!\n";
 }
 #endif
 
@@ -84,7 +90,9 @@ EnvironmentPtr Environment::get()
 
     auto init = []()
     {
+        std::cerr << "Construct env!\n";
         g_environment = new Environment();
+        std::cerr << "Done Construct env = " << g_environment << "!\n";
     };
     std::call_once(flag, init);
     return g_environment;
@@ -102,15 +110,21 @@ Environment::Environment()
     {
 #undef NUMPY_IMPORT_ARRAY_RETVAL
 #define NUMPY_IMPORT_ARRAY_RETVAL
+std::cerr << "Import array!\n";
         import_array();
     };
 
+std::cerr << "Env ctor!\n";
     if (!Py_IsInitialized())
     {
-        PyImport_AppendInittab(const_cast<char*>("redirector"), redirector_init);
+std::cerr << "Initialize!\n";
+    //    PyImport_AppendInittab(const_cast<char*>("redirector"), redirector_init);
+std::cerr << "Import inittab!\n";
         Py_Initialize();
+std::cerr << "Py_Initialize()!\n";
     } else
     {
+std::cerr << "Already initialized!\n";
         m_redirector.init();
         PyObject* added  = PyImport_AddModule("redirector");
         if (!added)
@@ -118,7 +132,9 @@ Environment::Environment()
     }
 
     initNumpy();
+std::cerr << "Done import numpy!\n";
     PyImport_ImportModule("redirector");
+std::cerr << "Done importing redirector!\n";
 }
 
 

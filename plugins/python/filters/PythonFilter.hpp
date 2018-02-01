@@ -48,7 +48,7 @@ class PDAL_DLL PythonFilter : public Filter
 {
 public:
     PythonFilter() : Filter(), m_script(NULL)
-        {}
+        {std::cerr << "Made python filter!\n"; }
 
     static void *create();
     static int32_t destroy(void *);

@@ -244,6 +244,7 @@ bool PluginManager<T>::initializePlugin(PF_InitFunc initFunc)
 template <typename T>
 bool PluginManager<T>::l_initializePlugin(PF_InitFunc initFunc)
 {
+    std::cerr << "Invoking registration!\n";
     initFunc();
     return true;
 }
@@ -388,6 +389,7 @@ std::cerr << "About to get init func!\n";
             if (PF_InitFunc initFunc =
                     (PF_InitFunc)(d->getSymbol("PF_initPlugin")))
             {
+                std::cerr << "Got symbol!\n";
                 loaded = initializePlugin(initFunc);
                 m_log->get(LogLevel::Debug) << "Initialized plugin '" <<
                     completePath << "'." << std::endl;

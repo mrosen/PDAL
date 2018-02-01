@@ -118,7 +118,7 @@ std::cerr << "Env ctor!\n";
     if (!Py_IsInitialized())
     {
 std::cerr << "Initialize!\n";
-    //    PyImport_AppendInittab(const_cast<char*>("redirector"), redirector_init);
+        PyImport_AppendInittab(const_cast<char*>("redirector"), redirector_init);
 std::cerr << "Import inittab!\n";
         Py_Initialize();
 std::cerr << "Py_Initialize()!\n";

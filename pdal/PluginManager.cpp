@@ -338,6 +338,7 @@ bool PluginManager<T>::guessLoadByPath(const std::string& driverName)
         char pathsep('/');
 #endif
         std::string file = pluginPath + pathsep + pluginName;
+std::cerr << "Load file = " << file << "!\n";
         if (FileUtils::fileExists(file) &&
             !FileUtils::isDirectory(file))
             return loadByPath(file);
@@ -378,10 +379,12 @@ bool PluginManager<T>::loadByPath(const std::string& pluginPath)
         m_log->get(LogLevel::Debug) << "Attempting to load plugin '" <<
             completePath << "'." << std::endl;
 
+        std::cerr << "About to load lib " << completePath << "!n";
         if (DynamicLibrary *d = loadLibrary(completePath, errorString))
         {
             m_log->get(LogLevel::Debug) << "Loaded plugin '" << completePath <<
                 "'." << std::endl;
+std::cerr << "About to get init func!\n";
             if (PF_InitFunc initFunc =
                     (PF_InitFunc)(d->getSymbol("PF_initPlugin")))
             {
@@ -442,7 +445,9 @@ template <typename T>
 DynamicLibrary *PluginManager<T>::loadLibrary(const std::string& path,
     std::string& errorString)
 {
+std::cerr << "Loading lib = " << path << "!\n";
     DynamicLibrary *d = DynamicLibrary::load(path, errorString);
+std::cerr << "Error loading lib = " << errorString << "!\n";
 
     if (d)
     {

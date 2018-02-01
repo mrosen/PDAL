@@ -419,6 +419,7 @@ T *PluginManager<T>::l_createObject(const std::string& objectType)
         std::lock_guard<std::mutex> lock(m_mutex);
         return m_plugins.count(objectType);
     });
+std::cerr << "Want to load " << objectType << "!\n";
 
     if (find() || (guessLoadByPath(objectType) && find()))
     {
@@ -431,6 +432,7 @@ T *PluginManager<T>::l_createObject(const std::string& objectType)
             std::lock_guard<std::mutex> lock(m_mutex);
             f = m_plugins[objectType].create;
         }
+std::cerr << "About to create object!\n";
         return f();
     }
     return nullptr;

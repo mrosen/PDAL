@@ -109,7 +109,9 @@ private:
     {
         auto f = []()
         {
+            std::cerr << "Attempting to create new object!\n";
             T *t = dynamic_cast<T *>(new C);
+            std::cerr << "Returning " << t << "!\n";
             return t;
         };
         Info info {pi.name, pi.link, pi.description, f};

@@ -355,8 +355,8 @@ int App::execute(StringList& cmdArgs, LogPtr& log)
     PluginManager<Kernel>::setLog(log);
 #ifndef _WIN32
 #if __has_include(<execinfo.h>)
-    if (m_debug)
-    {
+//    if (m_debug)
+//    {
         signal(SIGSEGV, [](int sig)
         {
             logPtr->get(LogLevel::Debug) << "Segmentation fault (signal 11)\n";
@@ -366,7 +366,7 @@ int App::execute(StringList& cmdArgs, LogPtr& log)
                 logPtr->get(LogLevel::Debug) << l << std::endl;
             exit(1);
         });
-    }
+//    }
 #endif
 #endif
 

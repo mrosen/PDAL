@@ -114,8 +114,15 @@ private:
             std::cerr << "Returning " << t << "!\n";
             return t;
         };
+        std::cerr << "Got into plugin registeration!\n";
         Info info {pi.name, pi.link, pi.description, f};
+        std::cerr << "Constructed info!\n";
         std::lock_guard<std::mutex> lock(m_mutex);
+        std::cerr << "Finding plugin!\n";
+        if (m_plugins.find(pi.name) == m_plugins.end())
+            std::cerr << pi.name << "Already exists!\n";
+        else
+            std::cerr << "Inserting " << pi.name << "!\n";
         m_plugins.insert(std::make_pair(pi.name, info));
     }
     bool l_loadPlugin(const std::string& pluginFilename);

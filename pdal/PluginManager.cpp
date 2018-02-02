@@ -250,7 +250,8 @@ template <typename T>
 PluginManager<T>::PluginManager(const StringList& suffixes) :
     m_suffixes(suffixes), m_log(new Log("PDAL", &std::clog))
 {
-    std::cerr << "Creating PluginManager " << suffixes[0] << "!\n";
+    std::cerr << "Creating PluginManager " << suffixes[0] <<
+        " = " << this << "!\n";
     m_instance = this;
 }
 

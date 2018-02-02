@@ -114,9 +114,9 @@ private:
             std::cerr << "Returning " << t << "!\n";
             return t;
         };
-        std::cerr << "Got into plugin registeration!\n";
         Info info {pi.name, pi.link, pi.description, f};
-        std::cerr << "Constructed info!\n";
+        std::cerr << "Constructed info this/mutex = " <<
+            this << "/" << &m_mutex << "!\n";
         std::lock_guard<std::mutex> lock(m_mutex);
         std::cerr << "Finding plugin!\n";
         if (m_plugins.find(pi.name) == m_plugins.end())

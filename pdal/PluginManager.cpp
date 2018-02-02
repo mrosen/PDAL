@@ -56,10 +56,9 @@ namespace pdal
 namespace
 {
 
-/**
 static PluginManager<Stage> s_stageInstance({"reader", "writer", "filter"});
 static PluginManager<Kernel> s_kernelInstance({"kernel"});
-**/
+
 
 #if defined(__APPLE__) && defined(__MACH__)
     const std::string dynamicLibraryExtension(".dylib");
@@ -92,9 +91,6 @@ StringList pluginSearchPaths()
     return searchPaths;
 }
 } // unnamed namespace;
-
-PluginManager<Stage> s_stageInstance({"reader", "writer", "filter"});
-PluginManager<Kernel> s_kernelInstance({"kernel"});
 
 template <typename T>
 bool PluginManager<T>::pluginNameValid(const std::string& pathname)
@@ -254,6 +250,7 @@ template <typename T>
 PluginManager<T>::PluginManager(const StringList& suffixes) :
     m_suffixes(suffixes), m_log(new Log("PDAL", &std::clog))
 {
+    std::cerr << "Creating PluginManager " << suffixes[0] << "!\n";
     m_instance = this;
 }
 

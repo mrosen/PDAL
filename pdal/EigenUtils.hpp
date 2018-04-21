@@ -78,6 +78,8 @@ namespace eigen
 PDAL_DLL Eigen::Vector3f computeCentroid(PointView& view,
         std::vector<PointId> ids);
 
+PDAL_DLL Eigen::Vector3f computeDisplacement(Eigen::Vector3f A, Eigen::Vector3f B, Eigen::Vector3f C);
+
 /**
   Compute the covariance matrix of a collection of points.
 

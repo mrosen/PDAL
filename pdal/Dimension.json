@@ -367,6 +367,26 @@
     "description": "Estimate of point density"
     },
     {
+    "name": "LineDirX",
+    "type": "double",
+    "description": "X component of a vector pointing to the nearest point on a specified line"
+    },
+    {
+    "name": "LineDirY",
+    "type": "double",
+    "description": "Y component of a vector pointing to the nearest point on a specified line"
+    },
+    {
+    "name": "LineDirZ",
+    "type": "double",
+    "description": "Z component of a vector pointing to the nearest point on a specified line"
+    },
+    {
+    "name": "LineDist",
+    "type": "double",
+    "description": "Magnitude (Distance) of a vector pointing to the nearest point on a specified line"
+    },
+    {
     "name": "Omit",
     "type": "uint8_t",
     "description": "Used to shallowly mark a point as being omitted without removing it"

@@ -72,6 +72,34 @@ Eigen::Vector3f computeCentroid(PointView& view, std::vector<PointId> ids)
 
     return centroid;
 }
+// Displacement from A to BC.
+// Ref:  https://math.stackexchange.com/questions/1905533/find-perpendicular-distance-from-point-to-line-in-3d
+Eigen::Vector3f computeDisplacement(Eigen::Vector3f A, Eigen::Vector3f B, Eigen::Vector3f C)
+{
+    // d is direction vector of BC 
+    Eigen::Vector3f d = (C - B) / (B-C).norm();
+    // v is vector from B to A
+    Eigen::Vector3f v = A - B;
+    // t is the distance from B to P, the projection of A onto BC
+    float t = std::max(v.dot(d), 0.0f);
+    // P is the projection of A onto BC
+    Eigen::Vector3f P = B + t * d;
+    // ret is the vector from A to the projection of A onto BC
+    Eigen::Vector3f ret = P-A;
+/***********************************************
+    std::cout << "computeDisplacement\n";
+    std::cout << "  A:  " << A.transpose() << "\n";
+    std::cout << "  B:  " << B.transpose() << "\n";
+    std::cout << "  C:  " << C.transpose() << "\n";
+    std::cout << "  d:  " << d.transpose() << ".  direction vector for BC\n";
+    std::cout << "  v:  " << v.transpose() << ".  B to A vector\n";
+    std::cout << "  t:  " << t << ".  distance from B to P\n";
+    std::cout << "  P:  " << P.transpose() << ".  Projection of A onto BC\n";
+    std::cout << "  ret:  " << ret.transpose() << ".  A to P vector\n";
+    std::cout << "  ret.norm():  " << ret.norm() << ".  distance\n";
+***********************************************/
+    return ret;
+}
 
 Eigen::Matrix3f computeCovariance(PointView& view, std::vector<PointId> ids)
 {

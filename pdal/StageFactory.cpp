@@ -45,6 +45,7 @@
 #include <filters/ComputeRangeFilter.hpp>
 #include <filters/CropFilter.hpp>
 #include <filters/DecimationFilter.hpp>
+#include <filters/DistanceToLineFilter.hpp>
 #include <filters/DividerFilter.hpp>
 #include <filters/EigenvaluesFilter.hpp>
 #include <filters/ELMFilter.hpp>
@@ -281,6 +282,7 @@ StageFactory::StageFactory(bool no_plugins)
     PluginManager<Stage>::initializePlugin(ComputeRangeFilter_InitPlugin);
     PluginManager<Stage>::initializePlugin(CropFilter_InitPlugin);
     PluginManager<Stage>::initializePlugin(DecimationFilter_InitPlugin);
+    PluginManager<Stage>::initializePlugin(DistanceToLineFilter_InitPlugin);
     PluginManager<Stage>::initializePlugin(DividerFilter_InitPlugin);
     PluginManager<Stage>::initializePlugin(EigenvaluesFilter_InitPlugin);
     PluginManager<Stage>::initializePlugin(ELMFilter_InitPlugin);
